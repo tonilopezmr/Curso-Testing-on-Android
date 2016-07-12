@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest {
+public class BasicEspressoActivityTest {
 
     /**
      * ActivityTestRule es un JUnit Rule para lanzar la actividad bajo los test.
@@ -28,8 +28,8 @@ public class MainActivityTest {
      * blockes independientes de test en cada metodo.
      */
     @Rule
-    public ActivityTestRule<MainActivity> mainActivityTestRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<BasicEspressoActivity> mainActivityTestRule =
+            new ActivityTestRule<>(BasicEspressoActivity.class);
 
 
     @Test

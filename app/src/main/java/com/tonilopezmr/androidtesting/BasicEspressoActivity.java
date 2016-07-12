@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+public class BasicEspressoActivity extends AppCompatActivity {
 
     private EditText welcomeEditText;
     private String undoText = "";

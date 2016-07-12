@@ -9,10 +9,15 @@
         tools:showIn="@layout/activity_main"
         tools:context="com.tonilopezmr.androidtesting.MainActivity">
 
-    <TextView
+    <EditText
+            android:id="@+id/welcome_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello World!"
+            android:background="@android:color/transparent"
+            android:inputType="none"
+            android:maxLines="1"
+            android:maxLength="20"
             app:layout_constraintBottom_toBottomOf="@+id/content_main"
             app:layout_constraintLeft_toLeftOf="@+id/content_main"
             app:layout_constraintRight_toRightOf="@+id/content_main"

@@ -1,0 +1,85 @@
+package com.tonilopezmr.androidtesting;
+
+import android.support.design.widget.Snackbar;
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.text.InputType;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
+
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class MainActivityTest {
+
+    /**
+     * ActivityTestRule es un JUnit Rule para lanzar la actividad bajo los test.
+     *
+     * Rules son interceptores que se ejecutan en cada metodo de test, por eso es importante construir
+     * blockes independientes de test en cada metodo.
+     */
+    @Rule
+    public ActivityTestRule<MainActivity> mainActivityTestRule =
+            new ActivityTestRule<>(MainActivity.class);
+
+
+    @Test
+    public void
+    show_hello_world_first_time() {
+        onView(withId(R.id.welcome_edittext))
+                .check(matches(ViewMatchers.withInputType(InputType.TYPE_NULL)));
+        onView(withId(R.id.welcome_edittext))
+                .check(matches(withText("Hello World!")));
+    }
+
+    @Test
+    public void
+    change_text_when_click_update_button() {
+        onView(withId(R.id.fab))
+                .perform(click());
+
+        onView(withId(R.id.welcome_edittext))
+                .check(matches(ViewMatchers.withInputType(InputType.TYPE_CLASS_TEXT)));
+
+        onView(withId(R.id.welcome_edittext))
+                .perform(replaceText("I'm Toni"));
+        onView(withId(R.id.fab))
+                .perform(click());
+
+
+        onView(withId(R.id.welcome_edittext))
+                .check(matches(ViewMatchers.withInputType(InputType.TYPE_NULL)));
+        onView(withId(R.id.welcome_edittext))
+                .check(matches(withText("I'm Toni")));
+    }
+
+    @Test
+    public void
+    undo_text_when_click_snackbar_action_button() {
+        onView(withId(R.id.fab))
+                .perform(click());
+
+        onView(withId(R.id.welcome_edittext))
+                .perform(replaceText("Other text"));
+
+        onView(withId(R.id.fab))
+                .perform(click());
+//        onView(withId(R.id.snackbar_action))
+//                .perform(click());
+        onView(allOf(
+                isDescendantOfA(isAssignableFrom(Snackbar.SnackbarLayout.class)), withText("UNDO")))
+                .perform(click());
+
+        onView(withId(R.id.welcome_edittext))
+                .check(matches(withText("Hello World!")));
+    }
+}

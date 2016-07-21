@@ -11,15 +11,33 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CharacterCollection {
 
-    public List<GoTCharacter> getCharacters() throws Exception {
+    public List<GoTCharacter> getAll() throws Exception {
         StringBuffer response = getCharactersFromUrl();
 
         Type listType = new TypeToken<ArrayList<GoTCharacter>>() {}.getType();
         return new Gson().fromJson(response.toString(), listType);
+    }
+
+    public List<GoTCharacter> getAllByHouse(String houseName) throws Exception {
+        return getAll();
+    }
+
+    public List<GoTCharacter> sortByName() throws Exception {
+        List<GoTCharacter> characters = getAll();
+        Collections.sort(characters, new Comparator<GoTCharacter>() {
+            @Override
+            public int compare(GoTCharacter character, GoTCharacter t1) {
+                return character.getName().compareTo(t1.getName());
+            }
+        });
+
+        return characters;
     }
 
     protected StringBuffer getCharactersFromUrl() throws Exception {

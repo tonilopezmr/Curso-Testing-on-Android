@@ -1,5 +1,6 @@
 package com.tonilopezmr.androidtesting.got.presenter;
 
+import android.os.Handler;
 import com.tonilopezmr.androidtesting.got.MVP;
 import com.tonilopezmr.androidtesting.got.model.CharacterCollection;
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
@@ -26,18 +27,39 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
     }
 
     public void loadCharacters() {
-        domain.getCharacters(new CharacterCollection.Callback(){
+        final Handler handler = new Handler();
 
+        new Thread(new Runnable() { //Background
             @Override
-            public void success(List<GoTCharacter> goTCharacterList) {
-                view.show(goTCharacterList);
+            public void run () {
+                try {
+                    final List<GoTCharacter> characters = domain.getCharacters();
+                    showCharacters(characters, handler);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    onError(handler);
+                }
+
             }
+        }).start();
 
+    }
+
+    private void showCharacters(final List<GoTCharacter> characters, Handler handler) {
+        handler.post(new Runnable() {
             @Override
-            public void error(Exception ex) {
+            public void run () {
+                view.show(characters);
+            }
+        });
+    }
+
+    private void onError(Handler handler) {
+        handler.post(new Runnable() { //UI Thread
+            @Override
+            public void run () {
                 view.error();
             }
-
         });
     }
 

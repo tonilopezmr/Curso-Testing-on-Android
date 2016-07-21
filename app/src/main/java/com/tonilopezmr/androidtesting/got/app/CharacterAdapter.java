@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.GotCharacterViewHolder> {
+public class CharacterAdapter
+        extends RecyclerView.Adapter<CharacterAdapter.GotCharacterViewHolder> {
 
     private final List<GoTCharacter> gcs;
     private Activity activity;

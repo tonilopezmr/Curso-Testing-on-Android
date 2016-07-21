@@ -19,14 +19,14 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements CharacterListView {
 
-    Toolbar toolbar;
-    RecyclerView recyclerView;
-    ContentLoadingProgressBar progressBar;
-    CharacterAdapter adapter;
-    
-    TextView informationCase;
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private ContentLoadingProgressBar progressBar;
+    private CharacterAdapter adapter;
+    private TextView informationCase;
 
-    CharacterListPresenter characterListPresenter;
+    //Presenter
+    private CharacterListPresenter characterListPresenter;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

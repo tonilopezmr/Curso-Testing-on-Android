@@ -36,14 +36,21 @@ public class GoTCharacter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GoTCharacter character = (GoTCharacter) o;
+        GoTCharacter that = (GoTCharacter) o;
 
-        return name != null ? name.equals(character.name) : character.name == null;
+        if (!name.equals(that.name)) return false;
+        if (imageUrl != null ? !imageUrl.equals(that.imageUrl) : that.imageUrl != null) return false;
+        if (!description.equals(that.description)) return false;
+        return houseName != null ? houseName.equals(that.houseName) : that.houseName == null;
 
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        int result = name.hashCode();
+        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
+        result = 31 * result + description.hashCode();
+        result = 31 * result + (houseName != null ? houseName.hashCode() : 0);
+        return result;
     }
 }

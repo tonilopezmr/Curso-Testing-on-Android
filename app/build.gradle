@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-    
+
     defaultConfig {
         applicationId "com.tonilopezmr.androidtesting"
         minSdkVersion 14
@@ -26,8 +26,6 @@ configurations.all {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
     //Unit Test
     testCompile 'junit:junit:4.12'
 

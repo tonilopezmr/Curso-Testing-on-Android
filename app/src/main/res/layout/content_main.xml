@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:text="Hello World!"
             android:background="@android:color/transparent"
-            android:inputType="none"
             android:maxLines="1"
             android:maxLength="20"
             app:layout_constraintBottom_toBottomOf="@+id/content_main"

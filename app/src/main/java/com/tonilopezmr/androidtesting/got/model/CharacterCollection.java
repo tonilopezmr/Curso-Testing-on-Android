@@ -20,12 +20,23 @@ public class CharacterCollection {
         goTCharacterList = new LinkedList<>();
     }
 
+    /**
+     * Debe devolver una lista de personajes de juego de tronos de internet <b>junto
+     * con el contenido en la lista {@link #goTCharacterList} </b>
+     *
+     * <b>Escribir los test para este metodo, si el metodo no cumple su fin,
+     * terminarlo para que lo haga</b>
+     *
+     * @return Lista de personajes de juego de tronos
+     * @throws Exception
+     */
     public List<GoTCharacter> getAll() throws Exception {
         StringBuffer response = getCharactersFromUrl();
 
         Type listType = new TypeToken<ArrayList<GoTCharacter>>() {}.getType();
         return new Gson().fromJson(response.toString(), listType);
     }
+
 
     public List<GoTCharacter> getAllByHouse(String houseName) throws Exception {
         return getAll();
@@ -43,6 +54,14 @@ public class CharacterCollection {
         return characters;
     }
 
+    /**
+     * Debe añadir a la lista el nuevo personaje que se le pasa por parametros.
+     *
+     * <b>Para que si llama a {@link #getAll()} le devuelva lo que recoge de internet
+     * más lo que encuentre en {@link #goTCharacterList} </b>
+     *
+     * @param goTCharacter Personaje de juego de tronos
+     */
     public void create(GoTCharacter goTCharacter) {
         goTCharacterList.add(goTCharacter);
     }

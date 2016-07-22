@@ -22,18 +22,22 @@ import java.util.List;
 public class CharacterAdapter
         extends RecyclerView.Adapter<CharacterAdapter.GotCharacterViewHolder> {
 
-    private final List<GoTCharacter> gcs;
+    private final List<GoTCharacter> characterList;
     private Activity activity;
 
     public CharacterAdapter(Activity activity) {
-        this.gcs = new ArrayList<>();
+        this.characterList = new ArrayList<>();
         this.activity = activity;
     }
 
+    public void clear() {
+        characterList.clear();
+        notifyDataSetChanged();
+    }
+
     public void addAll(Collection<GoTCharacter> collection) {
-        for (int i = 0; i < collection.size(); i++) {
-            gcs.add((GoTCharacter) collection.toArray()[i]);
-        }
+        characterList.addAll(collection);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -45,7 +49,7 @@ public class CharacterAdapter
 
     @Override
     public void onBindViewHolder(final GotCharacterViewHolder holder, final int position) {
-        final GoTCharacter character = gcs.get(position);
+        final GoTCharacter character = characterList.get(position);
         holder.render(character);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +73,7 @@ public class CharacterAdapter
 
     @Override
     public int getItemCount() {
-        return gcs.size();
+        return characterList.size();
     }
 
     class GotCharacterViewHolder extends RecyclerView.ViewHolder {

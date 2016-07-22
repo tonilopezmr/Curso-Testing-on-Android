@@ -8,4 +8,8 @@ import java.util.List;
 public interface CharacterListView extends MVP.View {
 
     void show(List<GoTCharacter> characterList);
+    void showEmptyCase();
+    void hideEmptyCase();
+    void showProgressBar();
+    void hideProgressBar();
 }

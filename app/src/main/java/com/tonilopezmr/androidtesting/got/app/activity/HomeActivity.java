@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.tonilopezmr.androidtesting.R;
@@ -39,6 +41,21 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
         characterListPresenter = new CharacterListPresenter(new CharacterCollection());
         characterListPresenter.setView(this);
         characterListPresenter.init();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.sort_by_name) {
+            characterListPresenter.onSortClick();
+        }
+        return true;
     }
 
     @Override
@@ -88,39 +105,49 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
         });
     }
 
-    private void hide() {
-        progressBar.hide();
-        informationCase.setVisibility(View.GONE);
-        floatingActionButton.show();
-    }
-
     private void showInformation(String text) {
-        progressBar.hide();
         informationCase.setText(text);
         informationCase.setVisibility(View.VISIBLE);
+    }
+
+
+    /////////////////////////////////////
+    //   CharacterListView contract    //
+    /////////////////////////////////////
+
+
+    @Override
+    public void showProgressBar(){
+        adapter.clear();
+        progressBar.setVisibility(View.VISIBLE);
         floatingActionButton.hide();
     }
 
-      /////////////////////////////////////
-     //   CharacterListView contract    //
-    /////////////////////////////////////
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+        floatingActionButton.show();
+    }
+
+    @Override
+    public void hideEmptyCase() {
+        informationCase.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void showEmptyCase() {
+        showInformation(getString(R.string.not_characters));
+    }
 
     @Override
     public void error() {
-        showInformation("Error on load characters");
+        showInformation(getString(R.string.error_on_load_characters));
     }
-    
     
     @Override
     public void show(List<GoTCharacter> list) {
-        if (list.isEmpty()){
-            showInformation("Has not Characters");
-            return;
-        }
-        
         adapter.addAll(list);
-        adapter.notifyDataSetChanged();
-        hide();
     }
 
 }

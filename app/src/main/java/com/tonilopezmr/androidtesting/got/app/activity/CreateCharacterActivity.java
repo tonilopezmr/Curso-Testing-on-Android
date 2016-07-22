@@ -16,7 +16,7 @@ public class CreateCharacterActivity extends AppCompatActivity {
 
     }
 
-    public static void start(Context context){
+    public static void start(Context context) {
         Intent intent = new Intent(context, CreateCharacterActivity.class);
         context.startActivity(intent);
     }

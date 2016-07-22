@@ -15,9 +15,29 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
+    }
+
+    apply plugin: 'checkstyle'
+
+    task checkstyle(type: Checkstyle) {
+        configFile file("${project.rootDir}/checkstyle.xml")
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        classpath = files()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply plugin: 'checkstyle'
+
+checkstyle {
+    configFile rootProject.file('checkstyle.xml')
+    toolVersion = '6.7'
+    showViolations true
 }

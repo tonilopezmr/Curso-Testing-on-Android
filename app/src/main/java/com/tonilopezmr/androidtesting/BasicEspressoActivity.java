@@ -22,14 +22,14 @@ public class BasicEspressoActivity extends AppCompatActivity {
 
         initToolbar();
 
-        welcomeEditText = (EditText)findViewById(R.id.welcome_edittext);
+        welcomeEditText = (EditText) findViewById(R.id.welcome_edittext);
         welcomeEditText.setInputType(InputType.TYPE_NULL);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isToEditWelcome()){
+                if (isToEditWelcome()) {
                     //go to edit te welcome edit text
                     fab.setImageResource(R.drawable.ic_done);
                     welcomeEditText.setInputType(InputType.TYPE_CLASS_TEXT);

@@ -54,7 +54,7 @@ public class CharacterCollection {
         Collections.sort(characters, new Comparator<GoTCharacter>() {
             @Override
             public int compare(GoTCharacter character, GoTCharacter t1) {
-                return character.getName().compareTo(t1.getName());
+                return character.getName().compareTo(t1.getHouseName());
             }
         });
 

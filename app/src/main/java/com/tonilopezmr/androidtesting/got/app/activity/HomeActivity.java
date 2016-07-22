@@ -118,7 +118,6 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
 
     @Override
     public void showProgressBar() {
-        adapter.clear();
         progressBar.setVisibility(View.VISIBLE);
         floatingActionButton.hide();
     }

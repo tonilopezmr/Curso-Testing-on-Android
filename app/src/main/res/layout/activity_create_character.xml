@@ -18,6 +18,7 @@
                 android:id="@+id/name_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:maxLines="1"
                 android:hint="@string/name"
                 android:textStyle="bold"
@@ -28,6 +29,7 @@
                 android:id="@+id/house_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:maxLines="1"
                 android:hint="@string/house"
                 style="@style/FullWidthEditText"/>
@@ -37,7 +39,6 @@
                 android:id="@+id/description_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLines="1"
                 android:inputType="textMultiLine"
                 android:gravity="top"
                 android:hint="@string/description"

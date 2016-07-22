@@ -40,11 +40,6 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
     }
 
     public void onSortClick() {
-        if (listMode == ListMode.SORTED) {
-            loadCharacters();
-            return;
-        }
-
         sortByName();
     }
 

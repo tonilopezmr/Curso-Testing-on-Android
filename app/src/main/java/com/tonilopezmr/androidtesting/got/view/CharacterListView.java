@@ -12,4 +12,5 @@ public interface CharacterListView extends MVP.View {
     void hideEmptyCase();
     void showProgressBar();
     void hideProgressBar();
+
 }

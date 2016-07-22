@@ -18,7 +18,7 @@ public class ListViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-        listView = (ListView)findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.list_view);
 
         LinkedList<String> list = new LinkedList();
         list.add("Arya Stark");

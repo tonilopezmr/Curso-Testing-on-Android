@@ -43,8 +43,8 @@ public class CharacterAdapter
     @Override
     public GotCharacterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new GotCharacterViewHolder(LayoutInflater
-                                                .from(parent.getContext())
-                                                .inflate(R.layout.got_character_row, parent, false));
+                .from(parent.getContext())
+                .inflate(R.layout.got_character_row, parent, false));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CharacterAdapter
         });
     }
 
-    private void moveToDetailActivity(GotCharacterViewHolder viewHolder, GoTCharacter character){
+    private void moveToDetailActivity(GotCharacterViewHolder viewHolder, GoTCharacter character) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(activity, viewHolder.itemView, "character");
 
@@ -77,7 +77,7 @@ public class CharacterAdapter
     }
 
     class GotCharacterViewHolder extends RecyclerView.ViewHolder {
-        
+
         ImageView imageView;
         TextView nameTextView;
 

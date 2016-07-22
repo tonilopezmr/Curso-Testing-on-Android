@@ -10,7 +10,13 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+
 
 public class CharacterCollection {
 
@@ -23,7 +29,7 @@ public class CharacterCollection {
     /**
      * Debe devolver una lista de personajes de juego de tronos de internet <b>junto
      * con el contenido en la lista {@link #goTCharacterList} </b>
-     *
+     * <p>
      * <b>Escribir los test para este metodo, si el metodo no cumple su fin,
      * terminarlo para que lo haga</b>
      *
@@ -33,7 +39,8 @@ public class CharacterCollection {
     public List<GoTCharacter> getAll() throws Exception {
         StringBuffer response = getCharactersFromUrl();
 
-        Type listType = new TypeToken<ArrayList<GoTCharacter>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
+        }.getType();
         return new Gson().fromJson(response.toString(), listType);
     }
 
@@ -56,7 +63,7 @@ public class CharacterCollection {
 
     /**
      * Debe añadir a la lista el nuevo personaje que se le pasa por parametros.
-     *
+     * <p>
      * <b>Para que si llama a {@link #getAll()} le devuelva lo que recoge de internet
      * más lo que encuentre en {@link #goTCharacterList} </b>
      *
@@ -69,7 +76,8 @@ public class CharacterCollection {
     protected StringBuffer getCharactersFromUrl() throws Exception {
         Thread.sleep(1200); //fake wait
 
-        String url = "https://raw.githubusercontent.com/tonilopezmr/Game-of-Thrones/master/app/src/test/resources/data.json";
+        String url =
+                "https://raw.githubusercontent.com/tonilopezmr/Game-of-Thrones/master/app/src/test/resources/data.json";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
@@ -84,7 +92,7 @@ public class CharacterCollection {
         return response;
     }
 
-    public StringBuffer getContentFromFile(String filePath) throws Exception{
+    public StringBuffer getContentFromFile(String filePath) throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(filePath);
         File file = new File(resource.getPath());
@@ -95,7 +103,7 @@ public class CharacterCollection {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         StringBuffer sb = new StringBuffer();
         String line;
-        while ((line = reader.readLine()) != null){
+        while ((line = reader.readLine()) != null) {
             sb.append(line).append("\n");
         }
         reader.close();

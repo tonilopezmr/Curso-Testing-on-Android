@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
 
     //Presenter
     private CharacterListPresenter characterListPresenter;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +117,7 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
 
 
     @Override
-    public void showProgressBar(){
+    public void showProgressBar() {
         adapter.clear();
         progressBar.setVisibility(View.VISIBLE);
         floatingActionButton.hide();
@@ -144,7 +144,7 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
     public void error() {
         showInformation(getString(R.string.error_on_load_characters));
     }
-    
+
     @Override
     public void show(List<GoTCharacter> list) {
         adapter.addAll(list);

@@ -39,7 +39,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
         this.view = view;
     }
 
-    public void onSortClick(){
+    public void onSortClick() {
         if (listMode == ListMode.SORTED) {
             loadCharacters();
             return;
@@ -55,7 +55,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
         final Handler handler = new Handler();
         new Thread(new Runnable() { //Background
             @Override
-            public void run () {
+            public void run() {
                 try {
                     final List<GoTCharacter> characters = domain.sortByName();
                     showCharacters(characters, handler); //Come back to UI thread
@@ -75,7 +75,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
         final Handler handler = new Handler();
         new Thread(new Runnable() { //Background
             @Override
-            public void run () {
+            public void run() {
                 try {
                     final List<GoTCharacter> characters = domain.getAll();
                     showCharacters(characters, handler); //Come back to UI thread
@@ -92,8 +92,8 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
     private void showCharacters(final List<GoTCharacter> characters, Handler handler) {
         handler.post(new Runnable() {
             @Override
-            public void run () {
-                if (characters.isEmpty()){
+            public void run() {
+                if (characters.isEmpty()) {
                     view.showEmptyCase();
                     return;
                 }
@@ -107,7 +107,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
     private void onError(Handler handler) {
         handler.post(new Runnable() { //UI Thread
             @Override
-            public void run () {
+            public void run() {
                 view.hideProgressBar();
                 view.error();
             }

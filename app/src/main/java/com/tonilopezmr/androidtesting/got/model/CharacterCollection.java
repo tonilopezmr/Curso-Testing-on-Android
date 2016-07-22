@@ -10,12 +10,15 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class CharacterCollection {
+
+    private LinkedList<GoTCharacter> goTCharacterList;
+
+    public CharacterCollection() {
+        goTCharacterList = new LinkedList<>();
+    }
 
     public List<GoTCharacter> getAll() throws Exception {
         StringBuffer response = getCharactersFromUrl();
@@ -38,6 +41,10 @@ public class CharacterCollection {
         });
 
         return characters;
+    }
+
+    public void create(GoTCharacter goTCharacter) {
+        goTCharacterList.add(goTCharacter);
     }
 
     protected StringBuffer getCharactersFromUrl() throws Exception {

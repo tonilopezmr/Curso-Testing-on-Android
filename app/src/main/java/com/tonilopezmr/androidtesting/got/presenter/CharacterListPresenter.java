@@ -33,7 +33,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
             @Override
             public void run () {
                 try {
-                    final List<GoTCharacter> characters = domain.sortByName();
+                    final List<GoTCharacter> characters = domain.getAll();
                     showCharacters(characters, handler);
                 } catch (Exception e) {
                     e.printStackTrace();

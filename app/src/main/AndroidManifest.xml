@@ -25,6 +25,11 @@
                 android:name=".got.app.activity.DetailActivity"
                 android:parentActivityName=".got.app.activity.HomeActivity">
         </activity>
+        <activity
+                android:name=".got.app.activity.CreateCharacterActivity"
+                android:parentActivityName=".got.app.activity.HomeActivity">
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.tonilopezmr.androidtesting.got.app.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
     private ContentLoadingProgressBar progressBar;
     private CharacterAdapter adapter;
     private TextView informationCase;
+    private FloatingActionButton floatingActionButton;
 
     //Presenter
     private CharacterListPresenter characterListPresenter;
@@ -33,6 +35,7 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //presenter layer
         characterListPresenter = new CharacterListPresenter(new CharacterCollection());
         characterListPresenter.setView(this);
         characterListPresenter.init();
@@ -43,16 +46,64 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        informationCase = (TextView) findViewById(R.id.empty_and_error_case); 
-        
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        informationCase = (TextView) findViewById(R.id.empty_and_error_case);
         progressBar = (ContentLoadingProgressBar) findViewById(R.id.content_loading_progress_bar);
 
+        initRecyclerView();
+        initFAB();
+        addFABScrollBehavior();
+    }
+
+    private void addFABScrollBehavior() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    floatingActionButton.hide();
+                } else if (dy < 0) {
+                    floatingActionButton.show();
+                }
+            }
+        });
+    }
+
+    private void initRecyclerView() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         adapter = new CharacterAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
     }
+
+    private void initFAB() {
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_character);
+        floatingActionButton.setVisibility(View.INVISIBLE);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateCharacterActivity.start(HomeActivity.this);
+            }
+        });
+    }
+
+    private void hide() {
+        progressBar.hide();
+        informationCase.setVisibility(View.GONE);
+        floatingActionButton.show();
+    }
+
+    private void showInformation(String text) {
+        progressBar.hide();
+        informationCase.setText(text);
+        informationCase.setVisibility(View.VISIBLE);
+        floatingActionButton.hide();
+    }
+
+      /////////////////////////////////////
+     //   CharacterListView contract    //
+    /////////////////////////////////////
 
     @Override
     public void error() {
@@ -72,14 +123,4 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
         hide();
     }
 
-    private void hide() {
-        progressBar.hide();
-        informationCase.setVisibility(View.GONE);
-    }
-
-    private void showInformation(String text) {
-        progressBar.hide();
-        informationCase.setText(text);
-        informationCase.setVisibility(View.VISIBLE);
-    }
 }

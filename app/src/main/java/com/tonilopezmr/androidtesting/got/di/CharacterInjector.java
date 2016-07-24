@@ -10,16 +10,19 @@ public class CharacterInjector {
     private CharacterListPresenter listPresenter;
     private CharacterCollection characterCollection;
 
-    public CharacterInjector() {
-        characterCollection = new CharacterCollection();
-        listPresenter = new CharacterListPresenter(characterCollection);
-    }
-
     private CharacterListPresenter characterListPresenter() {
+        if (listPresenter == null) {
+            return new CharacterListPresenter(characterCollection());
+        }
+
         return listPresenter;
     }
 
     private CharacterCollection characterCollection() {
+        if (characterCollection == null) {
+            return new CharacterCollection();
+        }
+
         return characterCollection;
     }
 
@@ -33,10 +36,6 @@ public class CharacterInjector {
 
     public static void load(CharacterInjector injectorLocator) {
         injector = injectorLocator;
-    }
-
-    public static CharacterInjector injector() {
-        return injector;
     }
 
     public static void config(CharacterListPresenter listPresenter) {

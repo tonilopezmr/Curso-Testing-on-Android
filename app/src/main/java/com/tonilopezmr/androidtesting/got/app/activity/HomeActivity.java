@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.tonilopezmr.androidtesting.R;
 import com.tonilopezmr.androidtesting.got.app.CharacterAdapter;
-import com.tonilopezmr.androidtesting.got.model.CharacterCollection;
+import com.tonilopezmr.androidtesting.got.di.CharacterInjector;
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
 import com.tonilopezmr.androidtesting.got.presenter.CharacterListPresenter;
 import com.tonilopezmr.androidtesting.got.view.CharacterListView;
@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity implements CharacterListView
         setContentView(R.layout.activity_home);
 
         //presenter layer
-        characterListPresenter = new CharacterListPresenter(new CharacterCollection());
+        characterListPresenter = CharacterInjector.injectCharacterListPresenter();
         characterListPresenter.setView(this);
         characterListPresenter.init();
     }

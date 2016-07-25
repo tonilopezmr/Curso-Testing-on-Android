@@ -13,6 +13,7 @@ import java.util.List;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,7 +59,7 @@ public class CharacterRepositoryTest {
         GoTCharacter dummy = mock(GoTCharacter.class);
         CharacterRepository characterRepository = new CharacterRepositoryBuilder()
                 .withoutCharacters()
-                .characterValidatorAlways(true, Arrays.asList(dummy))
+                .characterValidatorAlways(true)
                 .build();
 
         characterRepository.create(dummy);
@@ -76,7 +77,7 @@ public class CharacterRepositoryTest {
 
         CharacterRepository characterRepository = new CharacterRepositoryBuilder()
                 .withCharacters(Arrays.asList(pepe, lucia))
-                .characterValidatorAlways(true, Arrays.asList(pepe, lucia, ana))
+                .characterValidatorAlways(true)
                 .build();
 
         characterRepository.create(ana);
@@ -111,11 +112,9 @@ public class CharacterRepositoryTest {
             this.characterApi = mock(CharacterApi.class);
         }
 
-        CharacterRepositoryBuilder characterValidatorAlways(boolean isValid, List<GoTCharacter> dummies) {
+        CharacterRepositoryBuilder characterValidatorAlways(boolean isValid) {
             Validator validator = mock(Validator.class);
-            for (GoTCharacter character : dummies) {
-                when(characterValidator.valid(character)).thenReturn(validator);
-            }
+            when(characterValidator.valid(any(GoTCharacter.class))).thenReturn(validator);
             when(validator.isValid()).thenReturn(isValid);
             return this;
         }

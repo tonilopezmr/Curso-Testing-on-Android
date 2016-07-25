@@ -7,4 +7,5 @@
     <string name="sort_by_name">Sort by Name</string>
     <string name="not_characters">Has not Characters</string>
     <string name="error_on_load_characters">Error on load characters</string>
+    <string name="create_character">Create Character</string>
 </resources>

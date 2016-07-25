@@ -1,6 +1,7 @@
 package com.tonilopezmr.androidtesting.got.di;
 
 import com.tonilopezmr.androidtesting.got.model.CharacterRepository;
+import com.tonilopezmr.androidtesting.got.model.api.CharacterApi;
 import com.tonilopezmr.androidtesting.got.model.validator.CharacterValidator;
 import com.tonilopezmr.androidtesting.got.presenter.CharacterListPresenter;
 
@@ -11,6 +12,7 @@ public class CharacterInjector {
     private CharacterListPresenter listPresenter;
     private CharacterRepository characterRepository;
     private CharacterValidator characterValidator;
+    private CharacterApi characterApi;
 
     private CharacterValidator characterValidator() {
         if (characterValidator == null) {
@@ -20,9 +22,17 @@ public class CharacterInjector {
         return characterValidator;
     }
 
+    private CharacterApi characterApi() {
+        if (characterApi == null) {
+            return new CharacterApi();
+        }
+
+        return characterApi;
+    }
+
     private CharacterRepository characterRepository() {
         if (characterRepository == null) {
-            return new CharacterRepository(characterValidator());
+            return new CharacterRepository(characterValidator(),  characterApi());
         }
 
         return characterRepository;
@@ -38,6 +48,10 @@ public class CharacterInjector {
 
     private void configService(CharacterValidator characterValidator) {
         this.characterValidator = characterValidator;
+    }
+
+    private void configService(CharacterApi characterApi) {
+        this.characterApi = characterApi;
     }
 
     private void configService(CharacterRepository characterRepository) {
@@ -67,6 +81,10 @@ public class CharacterInjector {
 
     public static void config(CharacterValidator characterValidator) {
         injector.configService(characterValidator);
+    }
+
+    public static void config(CharacterApi characterApi) {
+        injector.configService(characterApi);
     }
 
     public static CharacterListPresenter injectCharacterListPresenter() {

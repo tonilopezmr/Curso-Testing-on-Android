@@ -57,7 +57,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
             @Override
             public void run() {
                 try {
-                    final List<GoTCharacter> characters = domain.sortByName();
+                    final List<GoTCharacter> characters = domain.getSortByName();
                     showCharacters(characters, handler); //Come back to UI thread
                 } catch (Exception e) {
                     e.printStackTrace();

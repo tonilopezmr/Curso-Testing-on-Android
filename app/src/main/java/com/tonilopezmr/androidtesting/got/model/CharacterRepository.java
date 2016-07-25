@@ -18,11 +18,11 @@ import java.util.Comparator;
 
 
 
-public class CharacterCollection {
+public class CharacterRepository {
 
     private LinkedList<GoTCharacter> goTCharacterList;
 
-    public CharacterCollection() {
+    public CharacterRepository() {
         goTCharacterList = new LinkedList<>();
     }
 

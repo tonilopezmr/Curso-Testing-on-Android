@@ -1,6 +1,6 @@
 package com.tonilopezmr.androidtesting.got.di;
 
-import com.tonilopezmr.androidtesting.got.model.CharacterCollection;
+import com.tonilopezmr.androidtesting.got.model.CharacterRepository;
 import com.tonilopezmr.androidtesting.got.presenter.CharacterListPresenter;
 
 public class CharacterInjector {
@@ -8,7 +8,7 @@ public class CharacterInjector {
     private static CharacterInjector injector;
 
     private CharacterListPresenter listPresenter;
-    private CharacterCollection characterCollection;
+    private CharacterRepository characterCollection;
 
     private CharacterListPresenter characterListPresenter() {
         if (listPresenter == null) {
@@ -18,9 +18,9 @@ public class CharacterInjector {
         return listPresenter;
     }
 
-    private CharacterCollection characterCollection() {
+    private CharacterRepository characterCollection() {
         if (characterCollection == null) {
-            return new CharacterCollection();
+            return new CharacterRepository();
         }
 
         return characterCollection;
@@ -30,8 +30,8 @@ public class CharacterInjector {
         this.listPresenter = listPresenter;
     }
 
-    private void configService(CharacterCollection characterCollection) {
-        this.characterCollection = characterCollection;
+    private void configService(CharacterRepository characterRepository) {
+        this.characterCollection = characterRepository;
     }
 
     public static void load(CharacterInjector injectorLocator) {
@@ -42,15 +42,15 @@ public class CharacterInjector {
         injector.configService(listPresenter);
     }
 
-    public static void config(CharacterCollection characterCollection) {
-        injector.configService(characterCollection);
+    public static void config(CharacterRepository characterRepository) {
+        injector.configService(characterRepository);
     }
 
     public static CharacterListPresenter injectCharacterListPresenter() {
         return injector.characterListPresenter();
     }
 
-    public static CharacterCollection injectCharacterCollection() {
+    public static CharacterRepository injectCharacterCollection() {
         return injector.characterCollection();
     }
 }

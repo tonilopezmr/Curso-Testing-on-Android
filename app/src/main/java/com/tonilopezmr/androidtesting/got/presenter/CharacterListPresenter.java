@@ -2,7 +2,7 @@ package com.tonilopezmr.androidtesting.got.presenter;
 
 import android.os.Handler;
 import com.tonilopezmr.androidtesting.got.MVP;
-import com.tonilopezmr.androidtesting.got.model.CharacterCollection;
+import com.tonilopezmr.androidtesting.got.model.CharacterRepository;
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
 import com.tonilopezmr.androidtesting.got.view.CharacterListView;
 
@@ -20,9 +20,9 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
     private ListMode listMode;
 
     private CharacterListView view;
-    private CharacterCollection domain;
+    private CharacterRepository domain;
 
-    public CharacterListPresenter(CharacterCollection domain) {
+    public CharacterListPresenter(CharacterRepository domain) {
         this.domain = domain;
     }
 

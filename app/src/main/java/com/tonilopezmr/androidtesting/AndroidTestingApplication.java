@@ -12,4 +12,6 @@ public class AndroidTestingApplication extends Application{
         //Inyección de dependencias para GoT App
         CharacterInjector.load(new CharacterInjector());
     }
+
 }
+

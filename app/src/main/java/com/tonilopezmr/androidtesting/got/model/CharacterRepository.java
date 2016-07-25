@@ -2,6 +2,9 @@ package com.tonilopezmr.androidtesting.got.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tonilopezmr.androidtesting.got.model.validator.CharacterValidator;
+import com.tonilopezmr.androidtesting.got.model.validator.InvalidException;
+import com.tonilopezmr.androidtesting.got.model.validator.Validator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,19 +13,16 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
+import java.util.*;
 
 
 public class CharacterRepository {
 
+    private CharacterValidator characterValidator;
     private LinkedList<GoTCharacter> goTCharacterList;
 
-    public CharacterRepository() {
+    public CharacterRepository(CharacterValidator characterValidator) {
+        this.characterValidator = characterValidator;
         goTCharacterList = new LinkedList<>();
     }
 
@@ -62,14 +62,18 @@ public class CharacterRepository {
     }
 
     /**
-     * Debe añadir a la lista el nuevo personaje que se le pasa por parametros.
-     * <p>
-     * <b>Para que si llama a {@link #getAll()} le devuelva lo que recoge de internet
-     * más lo que encuentre en {@link #goTCharacterList} </b>
      *
-     * @param goTCharacter Personaje de juego de tronos
+     * Debe añadir a la lista el nuevo personaje que se le pasa por parametros.
+     *
+     * @param goTCharacter
+     * @throws InvalidException Si no el personaje no es valido
      */
-    public void create(GoTCharacter goTCharacter) {
+    public void create(GoTCharacter goTCharacter) throws InvalidException {
+        Validator validator = characterValidator.valid(goTCharacter);
+        if (!validator.isValid()) {
+            throw new InvalidException(validator);
+        }
+
         goTCharacterList.add(goTCharacter);
     }
 

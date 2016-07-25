@@ -17,6 +17,15 @@ public class CharacterValidator {
 
     private Validator validator;
 
+    /**
+     * No es valido:
+     *  - Vacio
+     *  - Solo espacios
+     *  - Solo en mayusculas
+     *
+     * @param goTCharacter
+     * @return {@link Validator} con el resultado de la validación
+     */
     public Validator valid(GoTCharacter goTCharacter) {
         validator = new Validator(GoTCharacter.class.getSimpleName());
         
@@ -27,15 +36,6 @@ public class CharacterValidator {
         return validator;
     }
 
-    /**
-     * * No es valido:
-     *  - Vacio
-     *  - Solo espacios
-     *  - Solo en mayusculas
-     *
-     * @param fieldText
-     * @param fieldKey
-     */
     private void isValid(String fieldText, String fieldKey) {
         if (isNotEmpty(fieldText)) {
             validator.addWrong(fieldKey, EMPTY_ERROR);

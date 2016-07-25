@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -22,16 +21,15 @@ public class CharacterRepositoryTest {
     @Test
     public void
     return_characters_by_house_name() throws Exception {
-        CharacterValidator characterValidator = mock(CharacterValidator.class);
-        CharacterApi characterApi = mock(CharacterApi.class);
-        CharacterRepository characterRepository = new CharacterRepository(characterValidator, characterApi);
-
         GoTCharacter pepe = getCharacter("Pepe", "Stark");
         GoTCharacter lucia = getCharacter("Lucia", "Stark");
         GoTCharacter ana = getCharacter("Ana", "Lannister");
         GoTCharacter sara = getCharacter("Sara", "");
 
-        when(characterRepository.getAll()).thenReturn(new LinkedList<GoTCharacter>(Arrays.asList(pepe, lucia, ana, sara)));
+        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+                .withCharacters(Arrays.asList(pepe, lucia, ana, sara))
+                .build();
+
         List<GoTCharacter> charactersByStark = characterRepository.getAllByHouse("Stark");
 
         assertThat(charactersByStark, containsInAnyOrder(lucia, pepe));
@@ -40,16 +38,15 @@ public class CharacterRepositoryTest {
     @Test
     public void
     sort_characters() throws Exception {
-        CharacterValidator characterValidator = mock(CharacterValidator.class);
-        CharacterApi characterApi = mock(CharacterApi.class);
-        CharacterRepository characterRepository = new CharacterRepository(characterValidator, characterApi);
-
         GoTCharacter pepe = getCharacterNamed("Pepe");
         GoTCharacter lucia = getCharacterNamed("Lucia");
         GoTCharacter ana = getCharacterNamed("Ana");
         GoTCharacter sara = getCharacterNamed("Sara");
 
-        when(characterApi.getAll()).thenReturn(Arrays.asList(pepe, lucia, ana, sara));
+        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+                .withCharacters(Arrays.asList(pepe, lucia, ana, sara))
+                .build();
+
         List<GoTCharacter> sortedCharacters = characterRepository.getSortByName();
 
         assertThat(sortedCharacters, contains(ana, lucia, pepe, sara));

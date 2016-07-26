@@ -13,9 +13,9 @@ import java.util.List;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class CharacterRepositoryTest {
 
@@ -63,8 +63,8 @@ public class CharacterRepositoryTest {
                 .build();
 
         characterRepository.create(dummy);
-
         List<GoTCharacter> characterList = characterRepository.getAll();
+
         assertThat(characterList, contains(dummy));
     }
 
@@ -89,15 +89,15 @@ public class CharacterRepositoryTest {
     @NonNull
     private GoTCharacter getCharacterNamed(String name) {
         GoTCharacter character = mock(GoTCharacter.class);
-        when(character.getName()).thenReturn(name);
-        when(character.toString()).thenReturn(name);
+        given(character.getName()).willReturn(name);
+        given(character.toString()).willReturn(name);
         return character;
     }
 
     @NonNull
     private GoTCharacter getCharacter(String pepe, String house) {
         GoTCharacter character = getCharacterNamed(pepe);
-        when(character.getHouseName()).thenReturn(house);
+        given(character.getHouseName()).willReturn(house);
         return character;
     }
 
@@ -114,18 +114,18 @@ public class CharacterRepositoryTest {
 
         CharacterRepositoryBuilder characterValidatorAlways(boolean isValid) {
             Validator validator = mock(Validator.class);
-            when(characterValidator.valid(any(GoTCharacter.class))).thenReturn(validator);
-            when(validator.isValid()).thenReturn(isValid);
+            given(characterValidator.valid(any(GoTCharacter.class))).willReturn(validator);
+            given(validator.isValid()).willReturn(isValid);
             return this;
         }
 
         CharacterRepositoryBuilder withoutCharacters() throws Exception {
-            when(this.characterApi.getAll()).thenReturn(new ArrayList<GoTCharacter>());
+            given(this.characterApi.getAll()).willReturn(new ArrayList<GoTCharacter>());
             return this;
         }
 
         CharacterRepositoryBuilder withCharacters(List<GoTCharacter> characters) throws Exception {
-            when(this.characterApi.getAll()).thenReturn(new ArrayList(characters));
+            given(this.characterApi.getAll()).willReturn(new ArrayList(characters));
             return this;
         }
 

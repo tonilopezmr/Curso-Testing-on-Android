@@ -67,6 +67,16 @@ public class CharacterApiTest extends MockWebServerTest {
         assertExpectedCharacter(goTCharacterList.get(0), goTCharacter);
     }
 
+    @Test
+    public void
+    sends_the_correct_path_when_get_by_house() throws Exception {
+        enqueueMockResponse();
+
+        api.getByHouse("stark");
+
+        assertGetRequestSentTo("/"+CharacterApi.BY_HOUSE+"/stark");
+    }
+
     private void assertExpectedCharacter(GoTCharacter goTCharacter, GoTCharacter expected) {
         assertThat(goTCharacter.getName(), is(expected.getName()));
         assertThat(goTCharacter.getDescription(), is(expected.getDescription()));

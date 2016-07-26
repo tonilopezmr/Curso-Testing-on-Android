@@ -3,6 +3,7 @@ package com.tonilopezmr.androidtesting.got.model;
 import android.support.annotation.NonNull;
 import com.tonilopezmr.androidtesting.got.model.api.CharacterApi;
 import com.tonilopezmr.androidtesting.got.model.validator.CharacterValidator;
+import com.tonilopezmr.androidtesting.got.model.validator.InvalidException;
 import com.tonilopezmr.androidtesting.got.model.validator.Validator;
 import org.junit.Test;
 
@@ -60,6 +61,21 @@ public class CharacterRepositoryTest {
         CharacterRepository characterRepository = new CharacterRepositoryBuilder()
                 .withoutCharacters()
                 .characterValidatorAlways(true)
+                .build();
+
+        characterRepository.create(dummy);
+        List<GoTCharacter> characterList = characterRepository.getAll();
+
+        assertThat(characterList, contains(dummy));
+    }
+
+    @Test(expected = InvalidException.class)
+    public void
+    return_exception_when_character_is_invalid() throws Exception {
+        GoTCharacter dummy = mock(GoTCharacter.class);
+        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+                .withoutCharacters()
+                .characterValidatorAlways(false)
                 .build();
 
         characterRepository.create(dummy);

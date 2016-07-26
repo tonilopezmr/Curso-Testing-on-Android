@@ -86,6 +86,7 @@ public class CharacterRepository {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(endPoint)
+                .get()
                 .build();
 
         Response response = client.newCall(request).execute();

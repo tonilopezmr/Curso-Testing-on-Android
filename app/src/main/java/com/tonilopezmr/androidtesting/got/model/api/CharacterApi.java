@@ -1,38 +1,73 @@
 package com.tonilopezmr.androidtesting.got.model.api;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterApi {
 
-    public List<GoTCharacter> getAll() throws Exception {
-        StringBuffer response = getCharacters();
+    private static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
-        Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
-        }.getType();
-        return new Gson().fromJson(response.toString(), listType);
+    public static final String ALL = "all";
+    public static final String BY_HOUSE = "house";
+    public static final String CREATE = "create";
+
+    private String endPoint;
+    private CharacterJsonMapper jsonMapper;
+    private OkHttpClient client;
+
+    public CharacterApi(String endPoint, CharacterJsonMapper jsonMapper) {
+        this.endPoint = endPoint;
+        this.jsonMapper = jsonMapper;
+        this.client = new OkHttpClient.Builder()
+                        .addInterceptor(new JsonHeaderInterceptor())
+                        .build();
     }
 
-    private StringBuffer getCharacters() throws Exception {
-        Thread.sleep(1200); //fake wait
-        String endPoint =
-                "https://raw.githubusercontent.com/tonilopezmr/Game-of-Thrones/master/app/src/test/resources/data.json";
+    public List<GoTCharacter> getAll() throws Exception {
+        String response = getCharacters(endPoint + ALL);
 
-        OkHttpClient client = new OkHttpClient();
+        return jsonMapper.mapperList(response);
+    }
+
+    public List<GoTCharacter> getByHouse(String house) throws Exception {
+        String response = getCharacters(endPoint + BY_HOUSE + "/" + house);
+
+        return jsonMapper.mapperList(response);
+    }
+
+    public void create(GoTCharacter goTCharacter) throws Exception {
+
+        String json = gotCharacterJson(goTCharacter);
+        RequestBody requestBody = RequestBody.create(JSON, json);
+
         Request request = new Request.Builder()
                 .url(endPoint)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).execute();
+    }
+
+    private String gotCharacterJson(GoTCharacter goTCharacter) {
+        return "{" +
+                "'name':'"+goTCharacter.getName()+"'," +
+                "'imageUrl':'"+goTCharacter.getImageUrl()+"'," +
+                "'description':'"+goTCharacter.getDescription()+"'," +
+                "'houseName':'"+goTCharacter.getHouseName()+"'" +
+                "}";
+    }
+
+    private String getCharacters(String endPoint) throws Exception {
+        Request request = new Request.Builder()
+                .url(endPoint)
+                .get()
                 .build();
 
         Response response = client.newCall(request).execute();
-        return new StringBuffer(response.body().string());
+        return new StringBuffer(response.body().string()).toString();
     }
 
 }

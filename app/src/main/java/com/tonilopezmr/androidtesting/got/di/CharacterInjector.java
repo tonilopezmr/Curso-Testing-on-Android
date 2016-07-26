@@ -2,6 +2,7 @@ package com.tonilopezmr.androidtesting.got.di;
 
 import com.tonilopezmr.androidtesting.got.model.CharacterRepository;
 import com.tonilopezmr.androidtesting.got.model.api.CharacterApi;
+import com.tonilopezmr.androidtesting.got.model.api.CharacterJsonMapper;
 import com.tonilopezmr.androidtesting.got.model.validator.CharacterValidator;
 import com.tonilopezmr.androidtesting.got.presenter.CharacterListPresenter;
 
@@ -13,6 +14,32 @@ public class CharacterInjector {
     private CharacterRepository characterRepository;
     private CharacterValidator characterValidator;
     private CharacterApi characterApi;
+    private String endPoint;
+    private CharacterJsonMapper characterJsonMapper;
+
+    private String endPoint() {
+        if (endPoint == null) {
+            return "https://raw.githubusercontent.com/tonilopezmr/Game-of-Thrones/master/app/src/test/resources/data.json";
+        }
+
+        return endPoint;
+    }
+
+    private CharacterJsonMapper characterJsonMapper() {
+        if (characterJsonMapper == null) {
+            return new CharacterJsonMapper();
+        }
+
+        return characterJsonMapper;
+    }
+
+    private CharacterApi characterApi() {
+        if (characterApi == null) {
+            return new CharacterApi(endPoint(), characterJsonMapper());
+        }
+
+        return characterApi;
+    }
 
     private CharacterValidator characterValidator() {
         if (characterValidator == null) {
@@ -20,14 +47,6 @@ public class CharacterInjector {
         }
 
         return characterValidator;
-    }
-
-    private CharacterApi characterApi() {
-        if (characterApi == null) {
-            return new CharacterApi();
-        }
-
-        return characterApi;
     }
 
     private CharacterRepository characterRepository() {
@@ -46,12 +65,20 @@ public class CharacterInjector {
         return listPresenter;
     }
 
-    private void configService(CharacterValidator characterValidator) {
-        this.characterValidator = characterValidator;
+    private void configService(String endPoint) {
+        this.endPoint = endPoint;
+    }
+
+    private void configService(CharacterJsonMapper characterJsonMapper) {
+        this.characterJsonMapper = characterJsonMapper;
     }
 
     private void configService(CharacterApi characterApi) {
         this.characterApi = characterApi;
+    }
+
+    private void configService(CharacterValidator characterValidator) {
+        this.characterValidator = characterValidator;
     }
 
     private void configService(CharacterRepository characterRepository) {
@@ -85,6 +112,14 @@ public class CharacterInjector {
 
     public static void config(CharacterApi characterApi) {
         injector.configService(characterApi);
+    }
+
+    public static void config(CharacterJsonMapper characterJsonMapper) {
+        injector.configService(characterJsonMapper);
+    }
+
+    public static void config(String endPoint) {
+        injector.configService(endPoint);
     }
 
     public static CharacterListPresenter injectCharacterListPresenter() {

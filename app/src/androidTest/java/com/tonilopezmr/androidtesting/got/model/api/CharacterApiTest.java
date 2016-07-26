@@ -1,6 +1,7 @@
 package com.tonilopezmr.androidtesting.got.model.api;
 
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
+import com.tonilopezmr.androidtesting.got.model.api.exceptions.UnknownErrorException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +41,14 @@ public class CharacterApiTest extends MockWebServerTest {
         api.create(goTCharacter);
 
         assertRequestBodyEquals(gotCharacterJson(goTCharacter));
+    }
+
+    @Test(expected = UnknownErrorException.class)
+    public void
+    throw_exception_when_there_is_not_internet() throws Exception {
+        enqueueMockResponse(503);
+
+        api.getAll();
     }
 
     @Test

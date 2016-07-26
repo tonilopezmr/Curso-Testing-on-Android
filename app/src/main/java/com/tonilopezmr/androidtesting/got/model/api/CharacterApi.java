@@ -1,6 +1,8 @@
 package com.tonilopezmr.androidtesting.got.model.api;
 
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
+import com.tonilopezmr.androidtesting.got.model.api.exceptions.ItemNotFoundException;
+import com.tonilopezmr.androidtesting.got.model.api.exceptions.UnknownErrorException;
 import okhttp3.*;
 
 import java.util.List;
@@ -39,7 +41,6 @@ public class CharacterApi {
     }
 
     public void create(GoTCharacter goTCharacter) throws Exception {
-
         String json = gotCharacterJson(goTCharacter);
         RequestBody requestBody = RequestBody.create(JSON, json);
 
@@ -48,7 +49,8 @@ public class CharacterApi {
                 .post(requestBody)
                 .build();
 
-        client.newCall(request).execute();
+        Response response = client.newCall(request).execute();
+        inspectResponseForErrors(response);
     }
 
     private String gotCharacterJson(GoTCharacter goTCharacter) {
@@ -67,7 +69,17 @@ public class CharacterApi {
                 .build();
 
         Response response = client.newCall(request).execute();
+        inspectResponseForErrors(response);
         return new StringBuffer(response.body().string()).toString();
+    }
+
+    private void inspectResponseForErrors(Response response) throws Exception {
+        int code = response.code();
+        if (code == 404) {
+            throw new ItemNotFoundException();
+        } else if (code >= 400) {
+            throw new UnknownErrorException(code);
+        }
     }
 
 }

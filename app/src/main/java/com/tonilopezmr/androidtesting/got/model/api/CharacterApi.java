@@ -1,10 +1,14 @@
 package com.tonilopezmr.androidtesting.got.model.api;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
 import com.tonilopezmr.androidtesting.got.model.api.exceptions.ItemNotFoundException;
 import com.tonilopezmr.androidtesting.got.model.api.exceptions.UnknownErrorException;
 import okhttp3.*;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterApi {
@@ -16,13 +20,11 @@ public class CharacterApi {
     public static final String BY_HOUSE = "house";
     public static final String CREATE = "create";
 
-    private String endPoint;
-    private CharacterJsonMapper jsonMapper;
     private OkHttpClient client;
+    private String endPoint;
 
-    public CharacterApi(String endPoint, CharacterJsonMapper jsonMapper) {
+    public CharacterApi(String endPoint) {
         this.endPoint = endPoint;
-        this.jsonMapper = jsonMapper;
         this.client = new OkHttpClient.Builder()
                         .addInterceptor(new JsonHeaderInterceptor())
                         .build();
@@ -31,17 +33,21 @@ public class CharacterApi {
     public List<GoTCharacter> getAll() throws Exception {
         String response = getCharacters(endPoint + ALL);
 
-        return jsonMapper.mapperList(response);
+        Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
+        }.getType();
+        return new Gson().fromJson(response, listType);
     }
 
     public List<GoTCharacter> getByHouse(String house) throws Exception {
         String response = getCharacters(endPoint + BY_HOUSE + "/" + house);
 
-        return jsonMapper.mapperList(response);
+        Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
+        }.getType();
+        return new Gson().fromJson(response, listType);
     }
 
     public void create(GoTCharacter goTCharacter) throws Exception {
-        String json = gotCharacterJson(goTCharacter);
+        String json = new Gson().toJson(goTCharacter);
         RequestBody requestBody = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
@@ -51,15 +57,6 @@ public class CharacterApi {
 
         Response response = client.newCall(request).execute();
         inspectResponseForErrors(response);
-    }
-
-    private String gotCharacterJson(GoTCharacter goTCharacter) {
-        return "{" +
-                "'name':'"+goTCharacter.getName()+"'," +
-                "'imageUrl':'"+goTCharacter.getImageUrl()+"'," +
-                "'description':'"+goTCharacter.getDescription()+"'," +
-                "'houseName':'"+goTCharacter.getHouseName()+"'" +
-                "}";
     }
 
     private String getCharacters(String endPoint) throws Exception {

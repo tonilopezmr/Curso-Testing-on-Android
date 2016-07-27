@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:showIn="@layout/activity_basic_espresso"
-        tools:context="com.tonilopezmr.androidtesting.BasicEspressoActivity">
+        tools:context="com.tonilopezmr.androidtesting.other.BasicEspressoActivity">
 
     <EditText
             android:id="@+id/welcome_edittext"

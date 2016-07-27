@@ -5,14 +5,14 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-            android:name=".AndroidTestingApplication"
+            android:name=".other.AndroidTestingApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".got.app.activity.HomeActivity"
+                android:name=".other.BasicEspressoActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustResize">
@@ -22,19 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".got.app.activity.DetailActivity"
-                android:parentActivityName=".got.app.activity.HomeActivity">
-        </activity>
 
-        <activity
-                android:name=".got.app.activity.CreateCharacterActivity"
-                android:parentActivityName=".got.app.activity.HomeActivity">
-        </activity>
-        <activity
-                android:name=".listview.ListViewActivity"
-                android:theme="@style/ListTheme">
-        </activity>
 
     </application>
 

@@ -1,4 +1,4 @@
-package com.tonilopezmr.androidtesting;
+package com.tonilopezmr.androidtesting.other;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import com.tonilopezmr.androidtesting.R;
 
 public class BasicEspressoActivity extends AppCompatActivity {
 

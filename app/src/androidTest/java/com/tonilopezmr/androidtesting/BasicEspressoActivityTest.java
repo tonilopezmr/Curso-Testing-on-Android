@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -54,7 +55,9 @@ public class BasicEspressoActivityTest {
                 .check(matches(ViewMatchers.withInputType(InputType.TYPE_CLASS_TEXT)));
 
         onView(withId(R.id.welcome_edittext))
-                .perform(replaceText("I'm Toni"));
+                .perform(replaceText("I'm Toni"))
+                .perform(closeSoftKeyboard());
+
         onView(withId(R.id.fab))
                 .perform(click());
 
@@ -72,7 +75,8 @@ public class BasicEspressoActivityTest {
                 .perform(click());
 
         onView(withId(R.id.welcome_edittext))
-                .perform(replaceText("Other text"));
+                .perform(replaceText("Other text"))
+                .perform(closeSoftKeyboard());
 
         onView(withId(R.id.fab))
                 .perform(click());

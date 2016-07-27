@@ -35,6 +35,10 @@
                 android:name=".listview.ListViewActivity"
                 android:theme="@style/ListTheme">
         </activity>
+        <activity
+                android:name=".BasicEspressoActivity"
+                android:theme="@style/ListTheme">
+        </activity>
 
     </application>
 

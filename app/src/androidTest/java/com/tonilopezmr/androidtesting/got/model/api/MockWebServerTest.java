@@ -6,9 +6,6 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.After;
 import org.junit.Before;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
@@ -49,11 +46,6 @@ public class MockWebServerTest {
         assertEquals(url, request.getPath());
     }
 
-    protected void assertRequestBodyFromFileEquals(String jsonFile) throws InterruptedException, IOException {
-        RecordedRequest request = server.takeRequest();
-        assertEquals(getContentFromFile(jsonFile), request.getBody().readUtf8());
-    }
-
     protected void assertRequestBodyEquals(String jsonRequest) throws InterruptedException, IOException {
         RecordedRequest request = server.takeRequest();
         assertEquals(jsonRequest, request.getBody().readUtf8());
@@ -64,15 +56,7 @@ public class MockWebServerTest {
     }
 
     protected void enqueueMockResponse(int code) throws IOException {
-        enqueueMockResponse(code, null);
-    }
-
-    protected void enqueueMockResponse(int code, String fileName) throws IOException {
-        MockResponse mockResponse = new MockResponse();
-        String fileContent = getContentFromFile(fileName);
-        mockResponse.setResponseCode(code);
-        mockResponse.setBody(fileContent);
-        server.enqueue(mockResponse);
+        enqueueMockResponse(code);
     }
 
     protected void enqueueMockResponse(String body) throws IOException {
@@ -102,36 +86,4 @@ public class MockWebServerTest {
         return request;
     }
 
-    protected String getContentFromFile(String fileName) throws IOException {
-        if (fileName == null) {
-            return "";
-        }
-
-        fileName = getClass().getResource("/"+ fileName).getFile();
-        File file = new File(fileName);
-        return convertFileToString(file);
-    }
-
-
-//    public String getContentFromFile(String filePath) throws IOException {
-//        if (filePath == null){
-//            return "";
-//        }
-//
-//        ClassLoader classLoader = getClass().getClassLoader();
-//        URL resource = classLoader.getResource(filePath);
-//        File file = new File(resource.getPath());
-//        return convertFileToString(file);
-//    }
-
-    public String convertFileToString(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line).append("\n");
-        }
-        reader.close();
-        return sb.toString();
-    }
 }

@@ -1,20 +1,13 @@
 package com.tonilopezmr.androidtesting.got.model.api;
 
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
-import com.tonilopezmr.androidtesting.got.model.api.exceptions.ItemNotFoundException;
-import com.tonilopezmr.androidtesting.got.model.api.exceptions.UnknownErrorException;
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.util.List;
 
 public class CharacterApi {
-
-    private static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
-
-    public static final String ALL = "all";
-    public static final String BY_HOUSE = "house";
-    public static final String CREATE = "create";
 
     private String endPoint;
     private CharacterJsonMapper jsonMapper;
@@ -29,57 +22,20 @@ public class CharacterApi {
     }
 
     public List<GoTCharacter> getAll() throws Exception {
-        String response = getCharacters(endPoint + ALL);
-
-        return jsonMapper.mapperList(response);
+        StringBuffer response = getCharacters();
+        return jsonMapper.mapperList(response.toString());
     }
 
-    public List<GoTCharacter> getByHouse(String house) throws Exception {
-        String response = getCharacters(endPoint + BY_HOUSE + "/" + house);
+    protected StringBuffer getCharacters() throws Exception {
+        Thread.sleep(1200); //fake wait
 
-        return jsonMapper.mapperList(response);
-    }
-
-    public void create(GoTCharacter goTCharacter) throws Exception {
-        String json = gotCharacterJson(goTCharacter);
-        RequestBody requestBody = RequestBody.create(JSON, json);
-
-        Request request = new Request.Builder()
-                .url(endPoint)
-                .post(requestBody)
-                .build();
-
-        Response response = client.newCall(request).execute();
-        inspectResponseForErrors(response);
-    }
-
-    private String gotCharacterJson(GoTCharacter goTCharacter) {
-        return "{" +
-                "'name':'"+goTCharacter.getName()+"'," +
-                "'imageUrl':'"+goTCharacter.getImageUrl()+"'," +
-                "'description':'"+goTCharacter.getDescription()+"'," +
-                "'houseName':'"+goTCharacter.getHouseName()+"'" +
-                "}";
-    }
-
-    private String getCharacters(String endPoint) throws Exception {
         Request request = new Request.Builder()
                 .url(endPoint)
                 .get()
                 .build();
 
         Response response = client.newCall(request).execute();
-        inspectResponseForErrors(response);
-        return new StringBuffer(response.body().string()).toString();
-    }
-
-    private void inspectResponseForErrors(Response response) throws Exception {
-        int code = response.code();
-        if (code == 404) {
-            throw new ItemNotFoundException();
-        } else if (code >= 400) {
-            throw new UnknownErrorException(code);
-        }
+        return new StringBuffer(response.body().string());
     }
 
 }

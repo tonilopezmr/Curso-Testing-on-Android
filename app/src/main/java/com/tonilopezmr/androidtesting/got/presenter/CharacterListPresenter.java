@@ -50,6 +50,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
 
     public void sortByName() {
         view.showProgressBar();
+        view.hideEmptyCase();
         listMode = ListMode.SORTED;
 
         final Handler handler = new Handler();
@@ -70,6 +71,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
 
     public void loadCharacters() {
         view.showProgressBar();
+        view.hideEmptyCase();
         listMode = ListMode.NOT_SORTED;
 
         final Handler handler = new Handler();

@@ -36,7 +36,6 @@ public class CharacterRepository {
         return characterList;
     }
 
-
     public List<GoTCharacter> getAllByHouse(String houseName) throws Exception {
         List<GoTCharacter> characterList = getAll();
 

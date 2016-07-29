@@ -4,13 +4,13 @@ public class GoTCharacter {
 
     private String name;
     private String imageUrl;
-    private String desc;
+    private String description;
     private String houseName;
 
     public GoTCharacter(String name, String imageUrl, String description, String houseName) {
         this.name = name;
         this.imageUrl = imageUrl;
-        this.desc = description;
+        this.description = description;
         this.houseName = houseName;
     }
 
@@ -23,7 +23,7 @@ public class GoTCharacter {
     }
 
     public String getDescription() {
-        return desc;
+        return description;
     }
 
     public String getHouseName() {
@@ -40,7 +40,7 @@ public class GoTCharacter {
 
         if (!name.equals(that.name)) return false;
         if (imageUrl != null ? !imageUrl.equals(that.imageUrl) : that.imageUrl != null) return false;
-        if (!desc.equals(that.desc)) return false;
+        if (!description.equals(that.description)) return false;
         return houseName != null ? houseName.equals(that.houseName) : that.houseName == null;
 
     }
@@ -49,7 +49,7 @@ public class GoTCharacter {
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
-        result = 31 * result + desc.hashCode();
+        result = 31 * result + description.hashCode();
         result = 31 * result + (houseName != null ? houseName.hashCode() : 0);
         return result;
     }

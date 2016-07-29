@@ -21,7 +21,7 @@ public class CharacterApi {
     private OkHttpClient client;
 
     public CharacterApi(String endPoint, CharacterJsonMapper jsonMapper) {
-        this.endPoint = endPoint;
+        this.endPoint = endPoint; //Termina en / no hace falta añadir /all, etc..
         this.jsonMapper = jsonMapper;
         this.client = new OkHttpClient.Builder()
                         .addInterceptor(new JsonHeaderInterceptor())
@@ -45,7 +45,7 @@ public class CharacterApi {
         RequestBody requestBody = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url(endPoint)
+                .url(endPoint + CharacterApi.CREATE)
                 .post(requestBody)
                 .build();
 

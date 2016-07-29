@@ -2,6 +2,8 @@ package com.tonilopezmr.androidtesting.got.model.api;
 
 import com.tonilopezmr.androidtesting.got.model.GoTCharacter;
 import com.tonilopezmr.androidtesting.got.model.api.exceptions.UnknownErrorException;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +11,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
 
 public class CharacterApiTest extends MockWebServerTest {
 
@@ -20,6 +23,13 @@ public class CharacterApiTest extends MockWebServerTest {
 
         String mockEndPoint = getBaseEndpoint();
         api = new CharacterApi(mockEndPoint, new CharacterJsonMapper());
+
+        //También se puede hacer esto usando el injector
+//        CharacterInjector.load(new CharacterInjector()); //Inicializamos el injector
+//        CharacterInjector.config(mockEndPoint);         //Sustituimos el endPoint de producción por el de test
+//        //Injectamos la Api con su CharacterJsonMapper real (por que no lo hemos sustituido por uno ficticio)
+//        //Y su endPoint de test
+//        api = CharacterInjector.injectCharacterApi();
     }
 
     @Test
@@ -31,6 +41,27 @@ public class CharacterApiTest extends MockWebServerTest {
 
         assertGetRequestSentTo("/"+ CharacterApi.ALL);
     }
+
+    @Test
+    public void
+    sends_the_correct_path_when_calls_get_by_house() throws Exception {
+        enqueueMockResponse();
+
+        api.getByHouse("Lannister");
+
+        assertGetRequestSentTo("/"+ CharacterApi.BY_HOUSE + "/Lannister");
+    }
+
+    @Test
+    public void
+    sends_the_correct_path_when_calls_create() throws Exception {
+        enqueueMockResponse();
+
+        api.create(new GoTCharacter("", "", "", ""));
+
+        assertPostRequestSentTo("/"+ CharacterApi.CREATE);
+    }
+
 
     @Test
     public void
@@ -51,9 +82,17 @@ public class CharacterApiTest extends MockWebServerTest {
         api.getAll();
     }
 
+    @Test(expected = UnknownErrorException.class)
+    public void
+    throw_exception_when_there_are_any_server_problem_in_create() throws Exception {
+        enqueueMockResponse(501);
+
+        api.create(new GoTCharacter("", "", "", ""));
+    }
+
     @Test
     public void
-    parse_ten_characters_when_call_get_all() throws Exception {
+    parse_three_characters_when_call_get_all() throws Exception {
         GoTCharacter goTCharacter = new GoTCharacter("pepe", "", "des", "house_name");
         String body = "["+ gotCharacterJson(goTCharacter)
                 + "," + gotCharacterJson(goTCharacter)
@@ -64,24 +103,43 @@ public class CharacterApiTest extends MockWebServerTest {
         List<GoTCharacter> goTCharacterList = api.getAll();
 
         assertThat(goTCharacterList.size(), is(3));
-        assertExpectedCharacter(goTCharacterList.get(0), goTCharacter);
+        assertExpectedCharacter(goTCharacterList.get(0), goTCharacter);  //Método para comprobar un character  |
+        assertThat(goTCharacterList.get(0), isCharacter(goTCharacter));  //assertThat con un Custom Matcher    |
     }
 
-    @Test
-    public void
-    sends_the_correct_path_when_get_by_house() throws Exception {
-        enqueueMockResponse();
-
-        api.getByHouse("stark");
-
-        assertGetRequestSentTo("/"+CharacterApi.BY_HOUSE+"/stark");
+    /**
+     * Este es el poder hamcrest de hacernos nuestros propios matches,
+     * para comprobar que un Personaje es el que deseamos.
+     *
+     *
+     * @param goTCharacter Personaje de juego de tronos
+     * @return
+     */
+    private Matcher<? super GoTCharacter> isCharacter(final GoTCharacter goTCharacter) {
+        return new CustomTypeSafeMatcher<GoTCharacter>(goTCharacter.toString()) {
+            @Override
+            protected boolean matchesSafely(GoTCharacter item) {
+                return item.equals(goTCharacter);
+            }
+        };
     }
 
+    /**
+     * Como el comparador Equals está implementado en {@link GoTCharacter} no hace falta assertar así.
+     *
+     * Así sería suficiente:
+     *
+     *       assertTrue(goTCharacter.equals(expected));
+     *
+     * @param goTCharacter
+     * @param expected
+     */
     private void assertExpectedCharacter(GoTCharacter goTCharacter, GoTCharacter expected) {
-        assertThat(goTCharacter.getName(), is(expected.getName()));
+        assertTrue(goTCharacter.equals(expected));
+        /*assertThat(goTCharacter.getName(), is(expected.getName()));
         assertThat(goTCharacter.getDescription(), is(expected.getDescription()));
         assertThat(goTCharacter.getImageUrl(), is(expected.getImageUrl()));
-        assertThat(goTCharacter.getHouseName(), is(expected.getHouseName()));
+        assertThat(goTCharacter.getHouseName(), is(expected.getHouseName()));*/
     }
 
     @Test
@@ -92,6 +150,16 @@ public class CharacterApiTest extends MockWebServerTest {
         api.getAll();
 
         assertRequestContainsHeader("Accept", "application/json");
+    }
+
+    @Test
+    public void
+    sends_content_type_header_when_api_calls() throws Exception {
+        enqueueMockResponse();
+
+        api.getAll();
+
+        assertRequestContainsHeader("Content-Type", "application/json");
     }
 
 

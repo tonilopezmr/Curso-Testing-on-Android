@@ -20,25 +20,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.list_view);
 
-        LinkedList<String> list = new LinkedList();
-        list.add("Arya Stark");
-        list.add("Bronn");
-        list.add("Cersei Lannister");
-        list.add("Daenerys Targaryen");
-        list.add("Eddard Stark");
-        list.add("Hodor");
-        list.add("Jaime Lannister");
-        list.add("Jon Snow");
-        list.add("Jorah Mormont");
-        list.add("Khal Drogo");
-        list.add("Lord Varys");
-        list.add("Margaery Tyrell");
-        list.add("Oberyn Martell");
-        list.add("Petyr Baelish");
-        list.add("Sansa Stark");
-        list.add("Stannis Baratheon");
-        list.add("Theon Greyjoy");
-        list.add("Tyrion Lannister");
+        LinkedList<String> list = CharacterListProvider.characterNames();
 
         final ArrayAdapter<String> adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);

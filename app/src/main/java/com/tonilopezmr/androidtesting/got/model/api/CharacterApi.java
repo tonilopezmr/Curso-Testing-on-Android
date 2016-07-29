@@ -39,16 +39,24 @@ public class CharacterApi {
     }
 
     public List<GoTCharacter> getByHouse(String house) throws Exception {
-        String response = getCharacters(endPoint + BY_HOUSE + "/" + house);
+        String response = getCharacters(endPoint);
 
         Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
         }.getType();
         return new Gson().fromJson(response, listType);
     }
 
+    /**
+     * Error que digo en el video: Este metodo no necesita el validador de personajes,
+     * por que es el CharacterRepository encargado de gestionar esos casos,
+     * esta clase solo se debe encagar de proveer datos de una Api. :)
+     *
+     * @param goTCharacter Personaje de juego de tronos
+     * @throws Exception
+     */
     public void create(GoTCharacter goTCharacter) throws Exception {
         String json = new Gson().toJson(goTCharacter);
-        RequestBody requestBody = RequestBody.create(JSON, json);
+        RequestBody requestBody = RequestBody.create(JSON, json+"/");
 
         Request request = new Request.Builder()
                 .url(endPoint)
@@ -59,6 +67,13 @@ public class CharacterApi {
         inspectResponseForErrors(response);
     }
 
+    /**
+     * Metodo que devuelve de la api un String con el json de la respuesta.
+     *
+     * @param endPoint
+     * @return
+     * @throws Exception
+     */
     private String getCharacters(String endPoint) throws Exception {
         Request request = new Request.Builder()
                 .url(endPoint)

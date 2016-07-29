@@ -10,6 +10,11 @@ import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 
+/**
+ * Clase padre de todos los test de integración con la API.
+ *
+ * Se pueden añadir más metodos en función de lo que se quiera comprobar.
+ */
 public class MockWebServerTest {
 
     private MockWebServer server;

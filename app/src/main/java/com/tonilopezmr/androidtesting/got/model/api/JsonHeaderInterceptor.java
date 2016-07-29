@@ -17,7 +17,7 @@ public class JsonHeaderInterceptor implements Interceptor {
         Request request = chain.request();
         request = request.newBuilder()
                 .addHeader("Accept", "application/json")
-                .addHeader("Content-Type", "application/json")
+                .addHeader("ContentType", "application/json")
                 .build();
         return chain.proceed(request);
     }

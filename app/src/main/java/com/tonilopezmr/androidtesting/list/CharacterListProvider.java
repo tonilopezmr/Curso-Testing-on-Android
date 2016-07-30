@@ -1,4 +1,4 @@
-package com.tonilopezmr.androidtesting.listview;
+package com.tonilopezmr.androidtesting.list;
 
 import java.util.LinkedList;
 

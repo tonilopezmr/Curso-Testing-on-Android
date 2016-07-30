@@ -12,9 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".listview.RecyclerViewActivity"
+                android:name=".got.app.activity.HomeActivity"
                 android:label="@string/app_name"
-                android:theme="@style/ListTheme"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -32,13 +32,17 @@
                 android:parentActivityName=".got.app.activity.HomeActivity">
         </activity>
         <activity
-                android:name=".listview.ListViewActivity"
+                android:name=".list.view.ListViewActivity"
                 android:theme="@style/ListTheme">
         </activity>
         <activity
                 android:name=".BasicEspressoActivity"
                 android:theme="@style/ListTheme">
         </activity>
+        <activity
+                android:name=".list.recyclerview.RecyclerViewActivity"
+                android:theme="@style/ListTheme"
+        />
 
     </application>
 

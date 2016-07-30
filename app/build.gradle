@@ -45,7 +45,14 @@ dependencies {
 
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
+
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+
+    //Para poder usar mockito en test de integración
+    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+    androidTestCompile("com.google.dexmaker:dexmaker-mockito:1.2") {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
 
     //app dependencies
     compile 'com.android.support:appcompat-v7:24.0.0'

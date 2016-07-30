@@ -1,4 +1,4 @@
-package com.tonilopezmr.androidtesting;
+package com.tonilopezmr.androidtesting.basics;
 
 import android.support.design.widget.Snackbar;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -6,6 +6,8 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.text.InputType;
+import com.tonilopezmr.androidtesting.BasicEspressoActivity;
+import com.tonilopezmr.androidtesting.R;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +41,7 @@ public class BasicEspressoActivityTest {
     @Test
     public void
     show_hello_world_first_time() {
-        onView(withId(R.id.welcome_edittext))
+        onView(ViewMatchers.withId(R.id.welcome_edittext))
                 .check(matches(ViewMatchers.withInputType(InputType.TYPE_NULL)));
         onView(withId(R.id.welcome_edittext))
                 .check(matches(withText("Hello World!")));

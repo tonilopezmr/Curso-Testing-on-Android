@@ -76,6 +76,10 @@ public class CharacterAdapter
         return characterList.size();
     }
 
+    public List<GoTCharacter> getItems() {
+        return new ArrayList<>(characterList);
+    }
+
     class GotCharacterViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;

@@ -45,7 +45,7 @@ public class RecyclerViewActivityTest {
 
     @Test
     public void
-    display_name_in_textview_when_click_in_a_name() throws Exception {
+    show_name_in_textview_when_click_in_a_name() throws Exception {
         onView(withId(R.id.recycler_view))
                 .perform(RecyclerViewActions.actionOnHolderItem(withViewHolder("Tyrion Lannister"),
                         click()));
@@ -56,14 +56,14 @@ public class RecyclerViewActivityTest {
 
     @Test
     public void
-    display_all_characters_size_in_list_view() throws Exception {
+    show_all_characters_size_in_list_view() throws Exception {
         onView(withId(R.id.recycler_view))
                 .check(matches(RecyclerViewItemsCountMatcher.recyclerViewHasItemCount(18)));
     }
 
     @Test
     public void
-    display_all_characters_in_list_view() throws Exception {
+    show_all_characters_in_list_view() throws Exception {
         List<String> characterNames = CharacterListProvider.characterNames();
 
         RecyclerViewInteraction.<String>onRecyclerView(withId(R.id.recycler_view))

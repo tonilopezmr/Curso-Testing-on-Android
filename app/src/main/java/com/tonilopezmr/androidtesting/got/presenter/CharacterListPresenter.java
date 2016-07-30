@@ -96,6 +96,7 @@ public class CharacterListPresenter implements MVP.Presenter<CharacterListView> 
             @Override
             public void run() {
                 if (characters.isEmpty()) {
+                    view.hideProgressBar();
                     view.showEmptyCase();
                     return;
                 }

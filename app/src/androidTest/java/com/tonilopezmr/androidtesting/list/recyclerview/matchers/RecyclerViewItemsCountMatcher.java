@@ -16,12 +16,22 @@
 
 package com.tonilopezmr.androidtesting.list.recyclerview.matchers;
 
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+/**
+ * Versión de un ItemsCount para recyclerView hecho con Matchers normales de hamcrest.
+ *
+ * Luego en el {@link android.support.test.espresso.ViewAssertion#check(View, NoMatchingViewException)}
+ * necesitas poner matcher() de la siguiente forma:
+ *
+ * onView(ViewMatcher)
+ *    .check(ViewAssertion)  ---> .check(matches(Cualquier matcher de hamcrest))
+ */
 public class RecyclerViewItemsCountMatcher extends TypeSafeMatcher<View> {
 
   private final int expectedItemCount;

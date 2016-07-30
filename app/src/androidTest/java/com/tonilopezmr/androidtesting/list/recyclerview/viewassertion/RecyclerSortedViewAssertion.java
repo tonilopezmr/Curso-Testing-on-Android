@@ -7,11 +7,13 @@ import android.support.test.espresso.core.deps.guava.collect.Ordering;
 import android.support.test.espresso.util.HumanReadables;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import org.hamcrest.StringDescription;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class RecyclerSortedViewAssertion<T extends Comparable> implements ViewAssertion {
 
@@ -25,24 +27,21 @@ public class RecyclerSortedViewAssertion<T extends Comparable> implements ViewAs
 
     @Override
     public void check(View view, NoMatchingViewException noViewFoundException) {
+        StringDescription description = new StringDescription();
         RecyclerView recyclerView = (RecyclerView) view;
         sortedList = withAdapter.itemsToSort(recyclerView);
 
-        checkIsNotEmpty(view);
+        checkIsNotEmpty(view, description);
 
-        if (!Ordering.natural().<T>isOrdered(sortedList)){
-            throw (new PerformException.Builder())
-                    .withActionDescription(toString())
-                    .withViewDescription(HumanReadables.describe(view))
-                    .withCause(new Exception("the list is not sorted "+ sortedList))
-                    .build();
-        }
+        description.appendText("The list "+ sortedList + " is not sorted");
+        assertTrue(description.toString(), Ordering.natural().<T>isOrdered(sortedList));
     }
 
-    private void checkIsNotEmpty(View view) {
+    private void checkIsNotEmpty(View view, StringDescription description) {
         if (sortedList.isEmpty()) {
+            description.appendText("The list must be not null");
             throw (new PerformException.Builder())
-                    .withActionDescription(toString())
+                    .withActionDescription(description.toString())
                     .withViewDescription(HumanReadables.describe(view))
                     .withCause(new IllegalStateException("The list is empty"))
                     .build();

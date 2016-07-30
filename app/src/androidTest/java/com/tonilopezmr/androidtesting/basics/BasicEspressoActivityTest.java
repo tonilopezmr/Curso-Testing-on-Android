@@ -63,7 +63,6 @@ public class BasicEspressoActivityTest {
         onView(withId(R.id.fab))
                 .perform(click());
 
-
         onView(withId(R.id.welcome_edittext))
                 .check(matches(ViewMatchers.withInputType(InputType.TYPE_NULL)));
         onView(withId(R.id.welcome_edittext))

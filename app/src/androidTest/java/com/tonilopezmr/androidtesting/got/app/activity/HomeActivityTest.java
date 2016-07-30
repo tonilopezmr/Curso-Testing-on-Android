@@ -154,6 +154,19 @@ public class HomeActivityTest {
 
     @Test
     public void
+    not_show_empty_case_when_there_are_characters() throws Exception {
+        CharacterRepository repository = mock(CharacterRepository.class);
+        CharacterInjector.config(repository);
+
+        given(repository.getAll()).willReturn(getCharacters());
+
+        mainActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.empty_and_error_case)).check(matches(not(isDisplayed())));
+    }
+
+    @Test
+    public void
     does_not_show_progress_bar_when_there_are_not_characters() throws Exception {
         CharacterRepository repository = mock(CharacterRepository.class);
         CharacterInjector.config(repository);
@@ -189,6 +202,19 @@ public class HomeActivityTest {
         mainActivityTestRule.launchActivity(null);
 
         onView(withText(getString(R.string.error_on_load_characters))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void
+    not_show_error_message_when_there_are_not_any_error() throws Exception {
+        CharacterRepository repository = mock(CharacterRepository.class);
+        CharacterInjector.config(repository);
+
+        given(repository.getAll()).willReturn(getCharacters());
+
+        mainActivityTestRule.launchActivity(null);
+
+        onView(withId(R.id.empty_and_error_case)).check(matches(not(isDisplayed())));
     }
 
     @Test

@@ -58,7 +58,7 @@ public class RecyclerViewActivityTest {
     public void
     show_all_characters_size_in_list_view() throws Exception {
         onView(withId(R.id.recycler_view))
-                .check(matches(RecyclerViewItemsCountMatcher.recyclerViewHasItemCount(18)));
+                .check(matches(RecyclerViewItemsCountMatcher.withItemCounts(18)));
     }
 
     @Test

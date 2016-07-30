@@ -51,7 +51,7 @@ public class RecyclerViewItemsCountMatcher extends TypeSafeMatcher<View> {
     description.appendText("recycler view does not contains " + expectedItemCount + " items");
   }
 
-  public static Matcher<View> recyclerViewHasItemCount(int itemCount) {
+  public static Matcher<View> withItemCounts(int itemCount) {
     return new RecyclerViewItemsCountMatcher(itemCount);
   }
 }

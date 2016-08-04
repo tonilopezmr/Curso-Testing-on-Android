@@ -53,15 +53,6 @@ public class CharacterApi {
         inspectResponseForErrors(response);
     }
 
-    private String gotCharacterJson(GoTCharacter goTCharacter) {
-        return "{" +
-                "'name':'"+goTCharacter.getName()+"'," +
-                "'imageUrl':'"+goTCharacter.getImageUrl()+"'," +
-                "'description':'"+goTCharacter.getDescription()+"'," +
-                "'houseName':'"+goTCharacter.getHouseName()+"'" +
-                "}";
-    }
-
     private String getCharacters(String endPoint) throws Exception {
         Request request = new Request.Builder()
                 .url(endPoint)
@@ -80,6 +71,15 @@ public class CharacterApi {
         } else if (code >= 400) {
             throw new UnknownErrorException(code);
         }
+    }
+
+    private String gotCharacterJson(GoTCharacter goTCharacter) {
+        return "{" +
+                "'name':'"+goTCharacter.getName()+"'," +
+                "'imageUrl':'"+goTCharacter.getImageUrl()+"'," +
+                "'description':'"+goTCharacter.getDescription()+"'," +
+                "'houseName':'"+goTCharacter.getHouseName()+"'" +
+                "}";
     }
 
 }

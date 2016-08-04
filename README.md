@@ -1,5 +1,7 @@
 # Testing-on-Android
 
+###Retos
+
 1º Reto : Crear un Unit test para CharacterValidator
 
 2º Reto : Implementar el MVP de Crear Personaje
@@ -8,6 +10,7 @@
 
 4º Reto : Testear todos los casos de GoT, también el de crear personaje de UI Test con Espresso.
 
+###Descripción
 
 El lugar de trabajo es en la rama **master** donde hay que ir haciendo
 todos los retos **menos** el reto 3º que es en la rama **integration-test** 

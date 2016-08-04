@@ -32,7 +32,15 @@
                 android:parentActivityName=".got.app.activity.HomeActivity">
         </activity>
         <activity
-                android:name=".listview.ListViewActivity"
+                android:name=".BasicEspressoActivity"
+                android:theme="@style/ListTheme">
+        </activity>
+        <activity
+                android:name=".list.view.ListViewActivity"
+                android:theme="@style/ListTheme">
+        </activity>
+        <activity
+                android:name=".list.recyclerview.RecyclerViewActivity"
                 android:theme="@style/ListTheme">
         </activity>
 

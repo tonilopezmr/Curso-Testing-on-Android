@@ -5,6 +5,12 @@ import com.tonilopezmr.androidtesting.got.model.CharacterRepository;
 import com.tonilopezmr.androidtesting.got.model.validator.CharacterValidator;
 import com.tonilopezmr.androidtesting.got.presenter.CharacterListPresenter;
 
+/**
+ * CharacterInjector with Service Locator.
+ *
+ * http://martinfowler.com/articles/injection.html
+ *
+ */
 public class CharacterInjector {
 
     private static CharacterInjector injector;

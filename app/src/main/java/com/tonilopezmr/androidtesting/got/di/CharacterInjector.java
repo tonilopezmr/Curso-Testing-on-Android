@@ -5,6 +5,12 @@ import com.tonilopezmr.androidtesting.got.model.api.CharacterApi;
 import com.tonilopezmr.androidtesting.got.model.api.CharacterJsonMapper;
 import com.tonilopezmr.androidtesting.got.model.validator.CharacterValidator;
 
+/**
+ * CharacterInjector with Service Locator.
+ *
+ * http://martinfowler.com/articles/injection.html
+ *
+ */
 public class CharacterInjector {
 
     private static CharacterInjector injector;

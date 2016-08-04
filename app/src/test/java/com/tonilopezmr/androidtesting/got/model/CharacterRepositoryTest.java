@@ -28,7 +28,7 @@ public class CharacterRepositoryTest {
         GoTCharacter ana = getCharacter("Ana", "Lannister");
         GoTCharacter sara = getCharacter("Sara", "");
 
-        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+        CharacterRepository characterRepository = new CharacterRepositoryTestBuilder()
                 .withCharacters(Arrays.asList(pepe, lucia, ana, sara))
                 .build();
 
@@ -45,7 +45,7 @@ public class CharacterRepositoryTest {
         GoTCharacter ana = getCharacterNamed("Ana");
         GoTCharacter sara = getCharacterNamed("Sara");
 
-        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+        CharacterRepository characterRepository = new CharacterRepositoryTestBuilder()
                 .withCharacters(Arrays.asList(pepe, lucia, ana, sara))
                 .build();
 
@@ -58,7 +58,7 @@ public class CharacterRepositoryTest {
     public void
     return_one_additional_character_when_create() throws Exception {
         GoTCharacter dummy = mock(GoTCharacter.class);
-        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+        CharacterRepository characterRepository = new CharacterRepositoryTestBuilder()
                 .withoutCharacters()
                 .characterValidatorAlways(true)
                 .build();
@@ -73,7 +73,7 @@ public class CharacterRepositoryTest {
     public void
     return_exception_when_character_is_invalid() throws Exception {
         GoTCharacter dummy = mock(GoTCharacter.class);
-        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+        CharacterRepository characterRepository = new CharacterRepositoryTestBuilder()
                 .withoutCharacters()
                 .characterValidatorAlways(false)
                 .build();
@@ -91,7 +91,7 @@ public class CharacterRepositoryTest {
         GoTCharacter lucia = getCharacterNamed("Lucia");
         GoTCharacter ana = getCharacterNamed("Ana");
 
-        CharacterRepository characterRepository = new CharacterRepositoryBuilder()
+        CharacterRepository characterRepository = new CharacterRepositoryTestBuilder()
                 .withCharacters(Arrays.asList(pepe, lucia))
                 .characterValidatorAlways(true)
                 .build();
@@ -118,29 +118,29 @@ public class CharacterRepositoryTest {
     }
 
 
-    private class CharacterRepositoryBuilder {
+    private class CharacterRepositoryTestBuilder {
 
         private CharacterValidator characterValidator;
         private CharacterApi characterApi;
 
-        CharacterRepositoryBuilder() {
+        CharacterRepositoryTestBuilder() {
             this.characterValidator = mock(CharacterValidator.class);
             this.characterApi = mock(CharacterApi.class);
         }
 
-        CharacterRepositoryBuilder characterValidatorAlways(boolean isValid) {
+        CharacterRepositoryTestBuilder characterValidatorAlways(boolean isValid) {
             Validator validator = mock(Validator.class);
             given(characterValidator.valid(any(GoTCharacter.class))).willReturn(validator);
             given(validator.isValid()).willReturn(isValid);
             return this;
         }
 
-        CharacterRepositoryBuilder withoutCharacters() throws Exception {
+        CharacterRepositoryTestBuilder withoutCharacters() throws Exception {
             given(this.characterApi.getAll()).willReturn(new ArrayList<GoTCharacter>());
             return this;
         }
 
-        CharacterRepositoryBuilder withCharacters(List<GoTCharacter> characters) throws Exception {
+        CharacterRepositoryTestBuilder withCharacters(List<GoTCharacter> characters) throws Exception {
             given(this.characterApi.getAll()).willReturn(new ArrayList(characters));
             return this;
         }

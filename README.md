@@ -1,5 +1,7 @@
 # Testing-on-Android
 
+Proyecto para resolver los retos del curso https://geekshubsacademy.com/cursos/android-testing
+
 ###Retos
 
 1º Reto : Crear un Unit test para CharacterValidator

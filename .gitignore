@@ -42,8 +42,3 @@ captures/
 
 # Intellij
 *.iml
-
-# Keystore files
-*.jks
-app/libs/
-app/src/main/res/drawable/
